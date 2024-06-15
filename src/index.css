@@ -1,0 +1,36 @@
+
+*{
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container{
+  display: flex;
+  width: 100%;
+  max-width: 80%;
+  align-items: center;
+  margin:  0 auto;
+}
+
+.Link{
+  outline: none;
+  color: black;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.css-1qdzy9k-MuiBarElement-root{
+  fill: rgb(14, 53, 88) !important;
+}
