@@ -1,17 +1,34 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../Pages/Home/Home';
 import LoginPage from '../Pages/Login/Login';
+import PrivateRoute from './PrivateRoute';
+import { BrowserRouter as Router, createBrowserRouter,RouterProvider } from 'react-router-dom';
 
 const AppRoutes = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginPage/>} />
-        <Route path="/dash" element={<Home/>} />
-      </Routes>
-    </Router>
-  );
+
+  
+  const PrivateRoutes = [
+    {
+      path: '/',
+      element: <PrivateRoute/>,
+      children: [
+        {path: '/dash' ,element : <Home/>},
+      ]
+    }
+  ];
+
+  const notAuthenticatedRoutes = [
+    {path: '/',element: <LoginPage />,},
+  ];
+
+  const router = createBrowserRouter([
+    ...notAuthenticatedRoutes,
+    ...PrivateRoutes
+  ]);
+  
+  return <RouterProvider router={router} />;
+
 };
 
 export default AppRoutes;
