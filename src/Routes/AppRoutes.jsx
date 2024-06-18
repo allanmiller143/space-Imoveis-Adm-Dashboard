@@ -3,7 +3,13 @@ import React from 'react';
 import Home from '../Pages/Home/Home';
 import LoginPage from '../Pages/Login/Login';
 import PrivateRoute from './PrivateRoute';
-import { BrowserRouter as Router, createBrowserRouter,RouterProvider } from 'react-router-dom';
+import { BrowserRouter as Router, createBrowserRouter,RouterProvider, Outlet, Navigate } from 'react-router-dom';
+
+
+const PublicRoute = () => {
+  const token = localStorage.getItem('token');
+  return token ? <Navigate to="/dash"/> : <Outlet />; 
+};
 
 const AppRoutes = () => {
 
@@ -19,7 +25,11 @@ const AppRoutes = () => {
   ];
 
   const notAuthenticatedRoutes = [
-    {path: '/',element: <LoginPage />,},
+    {path: '/',element: <PublicRoute />,
+      children: [
+        {path: '/' ,element : <LoginPage/>},
+      ]
+    },
   ];
 
   const router = createBrowserRouter([
