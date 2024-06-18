@@ -7,7 +7,7 @@ import PropertyDetailDialog from '../../Drawer/NewProperties/PropertyDetailDialo
 import { PiShower, PiBed } from 'react-icons/pi';
 import { IoCarOutline } from 'react-icons/io5';
 
-function PropertyCard({ property }) {
+function PropertyCard({ property, func }) {
 
   const [open, setOpen] = useState(false);
   const [openPropertyDetail, setOpenPropertyDetail] = useState(false);
@@ -47,7 +47,7 @@ function PropertyCard({ property }) {
         <CardContent>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography sx={{ fontWeight: 'bold', color: 'black', fontSize: '12px',paddingRight: '5px' }}>{`${property.address} - ${property.city}`}</Typography>
-            <BasicPopover propertyData={property}/>
+            <BasicPopover propertyData={property} func = {func}/>
           </Box>
           <Typography 
             variant="body2" 

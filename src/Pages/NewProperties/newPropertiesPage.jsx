@@ -143,7 +143,7 @@ const NewPropertiesPage = () => {
           ) : (
             properties.map(user => (
               <Grid item key={user.id} xs={12} sm={6} md={4}>
-                <PropertyCard property={user} />
+                <PropertyCard property={user} func = {fetchProperties} />
               </Grid>
             ))
           )

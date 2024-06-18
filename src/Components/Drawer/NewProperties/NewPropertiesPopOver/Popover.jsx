@@ -8,7 +8,7 @@ import RecuseDiaolog from '../RecuseDiaolog/RecuseDiaolog';
 import { postData } from '../../../../Services/Api';
 import { toast } from 'sonner';
 
-export default function BasicPopover( { propertyData } ) {
+export default function BasicPopover( { propertyData,func } ) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openRecuseDialog, setOpenRecuseDialog] = useState(false);
   const token = localStorage.getItem('token');
@@ -35,6 +35,7 @@ export default function BasicPopover( { propertyData } ) {
       const response = await postData(`admin/property/approve/${propertyData.id}`,{},token);
       if(response.status === 200){
         toast.success('Publicação aprovada com sucesso');
+        func();
 
       }else{
         toast.error(response.message);
