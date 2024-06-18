@@ -16,7 +16,7 @@ const reasons = [
   { id: 6, label: 'Outro motivo' }
 ];
   
-function RecuseDialog({ open, handleClose,propertyData }) {
+function RecuseDialog({ open, handleClose,propertyData,func }) {
   const [selectedReasons, setSelectedReasons] = useState([]);
   const [customReason, setCustomReason] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,11 +38,11 @@ function RecuseDialog({ open, handleClose,propertyData }) {
     const selectedReasonLabels = selectedReasons.map(
       (reasonId) => reasons.find((reason) => reason.id === reasonId).label
     );
-    const reasonsString = selectedReasonLabels.join(', ');
+    let reasonsString = selectedReasonLabels.join(', ');
   
     console.log('Motivos selecionados:', reasonsString);
     if (selectedReasons.includes(6)) {
-      console.log('Justificativa personalizada:', customReason);
+      reasonsString = reasonsString + ':' + customReason;
     }
     if(selectedReasons.length === 0) {
       toast.warning('Selecione pelo menos um motivo para recusar a publicação do imóvel');  
@@ -52,11 +52,12 @@ function RecuseDialog({ open, handleClose,propertyData }) {
     else{
       try{
         setLoading(true);
-        const response = await postData(`admin/property/deny/${propertyData.id}`,{'reason': selectedReasons},token);
+        const response = await postData(`admin/property/deny/${propertyData.id}`,{'reason': customReason},token);
         if( response.status === 200){
           toast.success('Publicação recusada com sucesso');
+          func();
         }else{
-          toast.success(response.message);
+          toast.warning(response.message);
         }
       }catch(e){
         console.log(e);

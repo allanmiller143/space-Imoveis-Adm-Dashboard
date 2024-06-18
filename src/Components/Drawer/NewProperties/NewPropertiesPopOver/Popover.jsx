@@ -71,7 +71,7 @@ export default function BasicPopover( { propertyData,func } ) {
           <MenuItem onClick={approve}>Aceitar Publicação</MenuItem>
         </MenuList>
       </Popover>
-      <RecuseDiaolog open={openRecuseDialog} handleClose={handleCloseRecuse} propertyData={propertyData} />
+      <RecuseDiaolog open={openRecuseDialog} handleClose={handleCloseRecuse} propertyData={propertyData} func={func} />
     </div>
   );
 }
