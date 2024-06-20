@@ -26,8 +26,7 @@ function UserCard({ user }) {
               user.type === 'owner' ? 'Proprietário' : user.type === 'realstate' ? 'Imóbiliaria' : user.type === 'realtor' ? 'Corretor' : 'usuário'
             }
             </Typography>
-            <Typography sx = {{fontSize: '0.8rem',}} color="textSecondary" noWrap>Data de registro: {user.registrationDate}</Typography>
-            <Typography sx = {{fontSize: '0.8rem', color: 'green'}} color="textSecondary" noWrap onClick={() => window.open(`mailto:${user.email}`)}>Ultima atualização: {user.lastUpdate}</Typography>
+            {/* <Typography sx = {{fontSize: '0.8rem',}} color="textSecondary" noWrap>Data de registro: {user.registrationDate}</Typography> */}
           </CardContent>
         </Grid>
       </Grid>

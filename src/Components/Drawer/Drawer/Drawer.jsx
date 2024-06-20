@@ -18,7 +18,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
-import { FiSettings } from 'react-icons/fi';
+import { CiLogout } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../Context/AppContext';
 import logo from '../../../assets/logo.png';
@@ -112,17 +112,15 @@ export default function MiniDrawer() {
   const currentUser = JSON.parse(cuString); // Parse para obter o objeto
   const token = localStorage.getItem('token');
 
-
-
   const items = [
     { text: 'Usuários', icon: <FaUsersGear  /> },
     { text: 'Novos Imóveis',
       icon: 
       <Badge badgeContent= {totalNewProperties} color="primary">
-        <MailIcon color="action" sx={{ fontSize: 20 }} />
+        <MailIcon color="action" sx={{ fontSize: 18 }} />
       </Badge> 
     },
-    { text: 'Sair', icon: <FiSettings /> },
+    { text: 'Sair', icon: <CiLogout /> },
   ].filter(Boolean);
 
   React.useEffect(() => {
@@ -143,11 +141,6 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
-  const handleLogout = () => {
-    // Redireciona para a página inicial
-    navigate('/');
-  };
-
   const fetchProperties = async () => {
 
     try{
@@ -164,28 +157,27 @@ export default function MiniDrawer() {
     }
   };
 
-
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate('/');
+    toast.success('Sessão encerrada com sucesso');
+  };
 
   const renderSelectedComponent = () => {
     switch (selectedComponent) {
-    case 'Dashboard':
-      return  <div></div>;
     case 'Novos Imóveis':
       return<NewPropertiesPage/>;
     case 'Usuários':
-      return <div>
-        <UserList/>
-      </div>;
-    case 'Meus imóveis':
-      return <div></div>;
+      return <UserList/>;
     case 'Sair':
-      setSelectedComponent('Perfil');
-      handleLogout();
+      handleLogOut();
       return null; // Não renderiza nada
     default:
       return <ComponentOne />;
     }
   };
+
+
 
 
   return (
@@ -239,7 +231,7 @@ export default function MiniDrawer() {
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0, color: 'black' }} />
+                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} primaryTypographyProps={{ fontSize: '14px' }} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -247,8 +239,8 @@ export default function MiniDrawer() {
         <Divider />
         {open && (
           <div style={{ display: 'flex', padding: '10px', gap: '5px', alignItems: 'center', justifyContent: 'start' }}>
-            <Avatar alt="Remy Sharp" src={currentUser.profile ? currentUser.profile.url : ''} sx={{ width: 40, height: 40, cursor: 'pointer' }} />
-            <h6>{currentUser.name}</h6>
+            <Avatar alt="Remy Sharp" src={currentUser && currentUser.profile ? currentUser.profile.url : ''} sx={{ width: 40, height: 40, cursor: 'pointer' }} />
+            <h6>{currentUser && currentUser.name}</h6>
           </div>
         )}
       </Drawer>

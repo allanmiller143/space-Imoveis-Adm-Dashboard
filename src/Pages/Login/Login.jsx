@@ -35,7 +35,7 @@ function LoginPage() {
           navigate('/dash');
         } else {
           setLoading(false);
-          toast.warning(response.message);
+          toast.error('Email ou senha inválidos');
         }
       } catch (error) {
         setLoading(false);
@@ -48,11 +48,6 @@ function LoginPage() {
     <div className="login">
       {loading && <Loading data={{ open: loading }} />}
       <div className="login-backGround-header"> </div>
-
-
-      <Typography gutterBottom style={{color: '#fff', fontWeight: 'bold', fontSize: '2rem', marginTop: '1rem',width: '100%', textAlign: 'center', maxWidth: '500px'}}>
-        Seja bem-vindo ao painel de administração
-      </Typography>
 
       <div className="login-container">
         <div className="login-paper">
