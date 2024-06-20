@@ -16,6 +16,8 @@ const NewPropertiesPage = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItens, setTotalItens] = useState(0);
   const { totalNewProperties, setTotalNewProperties } = React.useContext(AppContext);
   const [graphicProperties, setGraphicProperties] = useState([]);
 
@@ -23,9 +25,13 @@ const NewPropertiesPage = () => {
 
 
   useEffect(() => {
-    fetchProperties();
     getGraphicProperties();
   }, []);
+
+
+  useEffect(() => {
+    fetchProperties();
+  }, [currentPage]);
 
   const getGraphicProperties = async () => {
     try{
@@ -43,9 +49,8 @@ const NewPropertiesPage = () => {
 
   const fetchProperties = async () => {
     setLoading(true);
-
     try{
-      const response = await getData('admin/properties/new',token);
+      const response = await getData(`admin/properties/new?page=${currentPage}`,token);
       if(response.status === 200 || response.status === 201){
         console.log(response);
         setProperties(response.userInfo.properties);  
@@ -63,57 +68,11 @@ const NewPropertiesPage = () => {
 
   };
 
+  const handleChangePage = (event, newPage) => { // PAGINAÇÃO
+    setCurrentPage(newPage);
+  };
 
-  const dataset = [
-    {
-      value: 21,
-      month: 'Janeiro',
-    },
-    {
-      value: 28,
-      month: 'Fevereiro',
-    },
-    {
-      value: 41,
-      month: 'Março',
-    },
-    {
-      value: 73,
-      month: 'Abril',
-    },
-    {
-      value: 99,
-      month: 'Maio',
-    },
-    {
-      value: 144,
-      month: 'Junho',
-    },
-    {
-      value: 319,
-      month: 'Julho',
-    },
-    {
-      value: 249,
-      month: 'Agosto',
-    },
-    {
-      value: 131,
-      month: 'Setembro',
-    },
-    {
-      value: 55,
-      month: 'Outubro',
-    },
-    {
-      value: 48,
-      month: 'Novembro',
-    },
-    {
-      value: 25,
-      month: 'Dezembro',
-    },
-  ];
+
   return (
     <Container>
       <Typography variant="h4" gutterBottom style={{ marginTop: '20px', color: '#092f46', fontWeight: 'bold' }}>
@@ -150,7 +109,7 @@ const NewPropertiesPage = () => {
         )}
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Pagination count={Math.ceil(properties.length / 12)} page={1} onChange={() => { }} />
+        <Pagination count={Math.ceil(totalNewProperties / 10)} page={currentPage} onChange={handleChangePage} />
       </Box>
     </Container>
   );
