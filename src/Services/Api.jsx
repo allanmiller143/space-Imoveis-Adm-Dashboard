@@ -35,10 +35,9 @@ export async function putData(url = '', data = {}, token = '') {
   return response;
 }
 
-export async function postData(url = '', data = {}, token = '') {
-  const response = await axios.post(`${apiUrl}${url}`, data, { headers: { 'Content-Type': 'application/json', 'x-access-token': token } })
+export async function postData(url = '', data = {},token = '') {
+  const response = await axios.post(`${apiUrl}${url}`, data, { headers: { 'Content-Type': 'application/json', 'x-access-token': token,'ngrok-skip-browser-warning': '1', } })
     .then((response) => {
-      console.log(response);
       const message = response.message;
       const status = response.status;
       const data = response.data;

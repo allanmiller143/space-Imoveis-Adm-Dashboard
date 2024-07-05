@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, TextField, Grid, Card, CardContent, CardMedia, Pagination, Box, IconButton, Button } from '@mui/material';
@@ -9,7 +10,7 @@ import DashBoardSeenGraphic from '../../Components/Drawer/Users/DashBoardSeenGra
 import { getData, putData } from '../../Services/Api';
 import { toast } from 'sonner';
 
-const UserList = () => {
+const UserList = ( {socket}) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('');
@@ -147,7 +148,7 @@ const UserList = () => {
           ) : (
             users.map(user => (
               <Grid item key={user.id} xs={12} sm={6} md={4}>
-                <UserCard user={user} />
+                <UserCard user={user} socket={socket} />
               </Grid>
             ))
           )

@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-undef */
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
@@ -21,15 +23,15 @@ import Avatar from '@mui/material/Avatar';
 import { CiLogout } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../Context/AppContext';
-import logo from '../../../assets/logo.png';
 import './Drawer.css';
 import UserList from '../../../Pages/Users/userPage';
 import { FaUsersGear } from 'react-icons/fa6';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 import NewPropertiesPage from '../../../Pages/NewProperties/newPropertiesPage';
 import { getData } from '../../../Services/Api';
 import { toast } from 'sonner';
+import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import { FaHouseChimney } from 'react-icons/fa6';
 
 const drawerWidth = 230;
 
@@ -58,6 +60,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  backgroundColor: '#092f46',
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
 }));
@@ -66,7 +69,7 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: 'white',
+  backgroundColor: '#092f46',
   boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Sombra pequena na parte inferior
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -101,7 +104,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-export default function MiniDrawer() {
+export default function MiniDrawer({socket}) {
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
@@ -117,9 +120,11 @@ export default function MiniDrawer() {
     { text: 'Novos Imóveis',
       icon: 
       <Badge badgeContent= {totalNewProperties} color="primary">
-        <MailIcon color="action" sx={{ fontSize: 18 }} />
+        <FaHouseChimney  color="action" sx={{ fontSize: 18 }} />
       </Badge> 
     },
+    { text: 'Chat', icon: <IoChatbubbleEllipsesOutline  /> },
+
     { text: 'Sair', icon: <CiLogout /> },
   ].filter(Boolean);
 
@@ -168,23 +173,23 @@ export default function MiniDrawer() {
     case 'Novos Imóveis':
       return<NewPropertiesPage/>;
     case 'Usuários':
-      return <UserList/>;
+      return <UserList socket={socket}/>;
     case 'Sair':
       handleLogOut();
       return null; // Não renderiza nada
     default:
-      return <ComponentOne />;
+      setSelectedComponent('Usuários');
+      navigate('/chat');
+      return null;
     }
   };
-
-
 
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}  sx={{ display: 'flex', backgroundColor: 'white',borderBottom: '1px solid lightgray',boxShadow: 'none'  }} >
-        <Toolbar sx={{ display: 'flex', backgroundColor: 'white', boxShadow: 'none' }}>
+      <AppBar position="fixed" open={open}  sx={{ display: 'flex',borderBottom: '1px solid lightgray',boxShadow: 'none'  }} >
+        <Toolbar sx={{ display: 'flex', boxShadow: 'none' }}>
           <IconButton
             color="black"
             aria-label="open drawer"
@@ -197,16 +202,15 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" color="black">
+          <Typography variant="h6" noWrap component="div" color="white">
             Meu espaço
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <img src={logo} alt="Logo" style={{ height: '30px' }} />
-          <h5>Space imóveis</h5>
-          <IconButton onClick={handleDrawerClose}>
+          <h5 style={{color: 'white', paddingLeft: '10px'}}>Space imóveis</h5>
+          <IconButton onClick={handleDrawerClose} sx={{ color: 'white' }}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
@@ -244,8 +248,7 @@ export default function MiniDrawer() {
           </div>
         )}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
-        <DrawerHeader />
+      <Box component="main" sx={{ flexGrow: 1, p: 1,pt: 10 }}>
         {selectedComponent && renderSelectedComponent()}
       </Box>
     </Box>

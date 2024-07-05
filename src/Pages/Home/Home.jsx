@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import MiniDrawer from '../../Components/Drawer/Drawer/Drawer';
 import Provider from '../../Context/Provider';
 
-function Home(){
+function Home( {socket}){
   return(
     <Provider>
-      <MiniDrawer/>
+      <MiniDrawer socket = {socket} />
     </Provider>
   );
 }

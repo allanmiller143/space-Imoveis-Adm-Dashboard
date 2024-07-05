@@ -3,7 +3,7 @@ import { Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/materi
 import React from 'react';
 import UserPopPver from '../../Drawer/Users/userPopPver';
 
-function UserCard({ user }) {
+function UserCard({ user, socket }) {
   return (
     <Card>
       <Grid container>
@@ -19,7 +19,7 @@ function UserCard({ user }) {
           <CardContent>
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Typography sx = {{fontSize: '1rem', fontWeight: 'bold'}} noWrap>{user.name}</Typography>
-              <UserPopPver />
+              <UserPopPver user={user} socket={socket} />
             </Box>
             <Typography sx = {{fontSize: '0.8rem',}} color="textSecondary" noWrap>{user.email} </Typography>
             <Typography sx = {{fontSize: '0.8rem',}} color="textSecondary" noWrap>Tipo: {
