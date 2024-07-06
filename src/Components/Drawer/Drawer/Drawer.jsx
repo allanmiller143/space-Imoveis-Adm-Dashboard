@@ -200,7 +200,7 @@ export default function MiniDrawer({socket}) {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: 'white' }} />
           </IconButton>
           <Typography variant="h6" noWrap component="div" color="white">
             Meu espaço

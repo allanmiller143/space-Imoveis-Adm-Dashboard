@@ -78,6 +78,7 @@ const UserList = ( {socket}) => {
       if (response.status === 200 || response.status === 201) {
         setUsers(response.data.users);
         setTotalItens(response.data.pagination.total);
+        console.log(response);
       } else {
         toast.error(response.status);
       }
@@ -93,7 +94,6 @@ const UserList = ( {socket}) => {
       const response = await getData('admin/users/monthly',token);
       if (response.status === 200 || response.status === 201) {
         setGraphicUsers(response.userInfo);  
-        console.log(response);
       }else{
         toast.error('Erro ao carregar conteúdo');
       }
